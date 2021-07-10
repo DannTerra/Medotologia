@@ -30,7 +30,12 @@ def main():
 # Função de probabilidade de um valor estar entre -infinito e um certo ponto 'p'
 # em uma distribuição-t com 'v' graus de liberdade (PDF)
 def t_distribution_cdf_intervalo(x1, x2, v):
-    return (t_distribution_cdf(x2, v) - t_distribution_cdf(x1, v))
+    distT_cdf1 = t_distribution_cdf(x1, v);
+    distT_cdf2 = t_distribution_cdf(x2, v);
+    if distT_cdf1 < distT_cdf2:
+        return  (distT_cdf2 - distT_cdf1)
+    else:
+        return  (distT_cdf1 - distT_cdf2)
 
 # Função de probabilidade de um valor estar entre -infinito e um certo ponto 'p'
 # em uma distribuição-t com 'v' graus de liberdade (PDF)
