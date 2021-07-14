@@ -5,13 +5,13 @@
  * Disciplina: Metodologia Científia (2021/1)
  * Autora: Daniela Costa Terra
 */
- 
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Vector;
 import org.apache.commons.math3.distribution.TDistribution;
+import org.apache.commons.math3.stat.inference.TTest;
 
 public class Exec1TStudentTest {
     
@@ -20,6 +20,7 @@ public class Exec1TStudentTest {
   *  desvios padrão das duas amostras são iguais
   */   
   public static void two_samples_t_test_equal_sd(
+        double[] data1, double[] data2,
         double Sm1,       // Sm1 = Sample 1 Mean.
         double Sd1,       // Sd1 = Sample 1 Standard Deviation.
         int Sn1,     // Sn1 = Sample 1 Size.
@@ -43,14 +44,22 @@ public class Exec1TStudentTest {
     double q = 0.5 - dist.cumulativeProbability(Math.abs(t_stat));
     System.out.printf("Probabilidade da diferença das médias ser devido a chance= %.2f", (2*q));
     
+    //Teste com biblioteca:
+    try{
+      System.out.println("Resultado classe TTest.pairedTTest(): "+ new TTest().pairedTTest(data1, data2));
+      System.out.println("Resultado boolean classe TTest.pairedTTest(): "+ new TTest().pairedTTest(data1, data2, alpha));
+    }catch(Exception ex){
+        System.out.println("Erro "+ex.getMessage());
+    }
+    
     //Testa hipótese Nula (Sm1 == Sm2) 
     if (q  < (alpha/2))
-          System.out.println("\nHipótese Nula:  REJECTED");
+          System.out.println("\nHipótese Nula:  NOT REJECTED");
     //Testa hipótese Alternativa (Sm1 != Sm2) 
     if (q > (alpha / 2)){
-          System.out.println("Hipótese Alternativa (Sm1 != Sm2):  REJECTED");
-    }else{
           System.out.println("Hipótese Alternativa (Sm1 != Sm2):  NOT REJECTED");
+    }else{
+          System.out.println("Hipótese Alternativa (Sm1 != Sm2):  REJECTED");
     }    
     
     //Testa hipótese Alternativa (Sm1 < Sm2) 
@@ -107,7 +116,7 @@ public class Exec1TStudentTest {
        double alpha = 0.05;
        //Calcula estatística do teste T-Student assuindo amostras com igual
        //variância
-       two_samples_t_test_equal_sd(mu1, std_dev1, v1.length, 
+       two_samples_t_test_equal_sd(v1, v2, mu1, std_dev1, v1.length, 
                mu2, std_dev1, v2.length, alpha);
          
   }
