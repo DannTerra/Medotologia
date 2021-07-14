@@ -43,15 +43,7 @@ public class Exec1TStudentTest {
     TDistribution dist = new TDistribution(v);
     double q = 0.5 - dist.cumulativeProbability(Math.abs(t_stat));
     System.out.printf("Probabilidade da diferença das médias ser devido a chance= %.2f", (2*q));
-    
-    //Teste com biblioteca:
-    try{
-      System.out.println("Resultado classe TTest.pairedTTest(): "+ new TTest().pairedTTest(data1, data2));
-      System.out.println("Resultado boolean classe TTest.pairedTTest(): "+ new TTest().pairedTTest(data1, data2, alpha));
-    }catch(Exception ex){
-        System.out.println("Erro "+ex.getMessage());
-    }
-    
+       
     //Testa hipótese Nula (Sm1 == Sm2) 
     if (q  < (alpha/2))
           System.out.println("\nHipótese Nula:  NOT REJECTED");
